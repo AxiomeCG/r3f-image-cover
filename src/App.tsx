@@ -1,6 +1,6 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import "./App.scss";
-import { Center, CubeCamera, OrbitControls, useBoxProjectedEnv, useTexture } from "@react-three/drei";
+import { Center, OrbitControls, useTexture } from "@react-three/drei";
 import imageCoverVertexShader from "./shaders/image-fit/vertex.glsl"
 import imageCoverFragmentShader from "./shaders/image-fit/fragment.glsl"
 import { Texture, Vector2 } from "three";
@@ -32,8 +32,6 @@ const calculateScaleFactors = (texture: Texture, containerSize: Vector2) => {
 
 function generateGalleryMeshes(textures: Texture[], landscapeContainerDimensions: Vector2) {
   return textures.map((texture, index) => {
-
-
     const {scaleFactorX, scaleFactorY} = calculateScaleFactors(texture, landscapeContainerDimensions);
 
     const uniforms = {
@@ -47,7 +45,6 @@ function generateGalleryMeshes(textures: Texture[], landscapeContainerDimensions
         value: scaleFactorY
       }
     }
-
 
     return <mesh key={`plane${index}`} position={[(landscapeContainerDimensions.x + 0.5) * index, 0, 0]}>
       <planeGeometry args={[landscapeContainerDimensions.x, landscapeContainerDimensions.y]}/>
@@ -68,14 +65,8 @@ const Scene = () => {
   const landscapeContainerDimensions = new Vector2(6, 4);
   const portraitContainerDimensions = new Vector2(4, 6);
 
-  const landscapeMeshes = generateGalleryMeshes(textures, landscapeContainerDimensions)
-  const portraitMeshes = generateGalleryMeshes(textures, portraitContainerDimensions)
-
-
-  useFrame((state) => {
-    const {clock} = state;
-
-  });
+  const landscapeMeshes = generateGalleryMeshes(textures, landscapeContainerDimensions);
+  const portraitMeshes = generateGalleryMeshes(textures, portraitContainerDimensions);
 
   return <>
     <Center>
@@ -88,9 +79,6 @@ const Scene = () => {
     </Center>
   </>
 }
-
-
-
 
 function App() {
 
