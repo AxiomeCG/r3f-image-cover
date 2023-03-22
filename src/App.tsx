@@ -84,7 +84,7 @@ function App() {
 
   return (
     <>
-      <Canvas>
+      <Canvas camera={{position: [0,0,10]}}>
         <Scene/>
         <pointLight position={[0, 5, 0]} intensity={1} color="white"/>
         <OrbitControls/>
